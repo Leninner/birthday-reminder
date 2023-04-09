@@ -1,0 +1,11 @@
+version = 0.1
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "birthday-reminder"
+s3_bucket = "aws-sam-cli-managed-leninner"
+s3_prefix = "birthday-reminder"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
