@@ -4,18 +4,18 @@ Description: >
   birthday-reminder
 
   Sample SAM Template for birthday-reminder
-  
+
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 30
 
 Resources:
   SaveBirthdayFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: save-birthday
-      Handler: saveBirthday.lambdaHandler
-      Runtine: nodejs18.x
+      Handler: src/handlers/saveBirthday.handler
+      Runtime: nodejs18.x
       Architectures:
         - x86_64
       Events:
@@ -48,3 +48,13 @@ Resources:
           KeyType: HASH
         - AttributeName: created
           KeyType: RANGE
+
+  LambdaDynamoDbWriteConnector:
+    Type: AWS::Serverless::Connector
+    Properties:
+      Source:
+        Id: SaveBirthdayFunction
+      Destination:
+        Id: BirthdayDatabase
+      Permissions:
+        - Write

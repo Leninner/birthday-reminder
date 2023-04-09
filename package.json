@@ -14,7 +14,7 @@
     "build": "sam build"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.92",
+    "@types/aws-lambda": "^8.10.114",
     "@types/jest": "^29.2.0",
     "@types/node": "^18.11.4",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
@@ -30,7 +30,15 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@aws-lambda-powertools/logger": "1.8.0",
+    "@aws-lambda-powertools/metrics": "1.8.0",
+    "@aws-lambda-powertools/tracer": "1.8.0",
     "@aws-sdk/client-dynamodb": "3.309.0",
-    "@aws-sdk/lib-dynamodb": "3.309.0"
+    "@aws-sdk/lib-dynamodb": "3.309.0",
+    "@middy/core": "^4.2.8",
+    "@middy/http-error-handler": "4.2.8",
+    "@middy/http-header-normalizer": "4.2.8",
+    "@middy/http-json-body-parser": "4.2.8",
+    "@middy/validator": "4.2.8"
   }
 }
