@@ -48,6 +48,42 @@ Resources:
           KeyType: HASH
         - AttributeName: created
           KeyType: RANGE
+  
+  ScheduleRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "Schedule rule for birthday-reminder"
+      ScheduleExpression: "cron(0 0 * * ? *)"
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt BirthdayReminderFunction.Arn
+          Id: BirthdayReminderFunction
+          Input: "{\"id\": \"birthday-reminder\"}"
+
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt BirthdayReminderFunction.Arn
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt ScheduleRule.Arn
+  
+  BirthdayReminderFunction:
+    Type: AWS::Serverless::Function
+    Properties: 
+      FunctionName: birthday-reminder
+      Handler: src/handlers/birthdayReminder.handler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - src/handlers/birthdayReminder.ts
 
   LambdaDynamoDbWriteConnector:
     Type: AWS::Serverless::Connector
