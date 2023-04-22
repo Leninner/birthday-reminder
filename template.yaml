@@ -53,7 +53,7 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Description: "Schedule rule for birthday-reminder"
-      ScheduleExpression: "cron(0 0 * * ? *)"
+      ScheduleExpression: "cron(0 6 * * ? *)"
       State: "ENABLED"
       Targets:
         - Arn: !GetAtt BirthdayReminderFunction.Arn
