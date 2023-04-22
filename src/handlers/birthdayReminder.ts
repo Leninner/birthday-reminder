@@ -15,6 +15,10 @@ export const lambdaHandler = async (): Promise<void> => {
     try {
         const params = {
             TableName: 'birthdays',
+            KeyConditionExpression: 'date LIKE :date',
+            ExpressionAttributeValues: {
+                ':date': { S: '2021-10-10' },
+            },
         };
 
         const rawBirthdays = (await documentClient.send(new QueryCommand(params))).Items;
